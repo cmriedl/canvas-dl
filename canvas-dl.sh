@@ -19,8 +19,7 @@
 
 trap 'echo "uh-oh something went wrong..."' ERR
 
-stuff=$(grep -rl 'window.kalturaIframePackageData = ' "$1" \
-        | xargs -I% cat % \
+stuff=$(curl -si "$1" | grep 'window.kalturaIframePackageData = ' \
         | sed -nr 's/.*window\.kalturaIframePackageData = (.*)/\1/p' \
         | sed '$ s/;$//' \
 	| python3 -m json.tool)
