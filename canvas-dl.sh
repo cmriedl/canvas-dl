@@ -2,7 +2,7 @@
 
 #    canvas-dl.sh
 #
-#    Copyright (C) 2019 cmr@informatik.wtf
+#    Copyright (C) 2019 cmr@informatik.wtf harrylane3@gmail.com
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,8 +19,7 @@
 
 trap 'echo "uh-oh something went wrong..."' ERR
 
-stuff=$(grep -rl 'window.kalturaIframePackageData = ' "$1" \
-        | xargs -I% cat % \
+stuff=$(curl -si "$1" | grep 'window.kalturaIframePackageData = ' \
         | sed -nr 's/.*window\.kalturaIframePackageData = (.*)/\1/p' \
         | sed '$ s/;$//' \
 	| python3 -m json.tool)
