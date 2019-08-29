@@ -26,14 +26,14 @@ import sys
 from urllib.request import urlretrieve
 
 
-MODULE_REGEX = re.compile('(Module [0-9]+) Topic:')
+MODULE_REGEX = re.compile('(Module [0-9]+)(?:Topic)?:')
 
 
 Video = namedtuple('Video', ['title', 'url'])
 
 
 def make_unix_compat(string):
-    return string.lower().replace(' ', '_')
+    return string.lower().replace(' ', '_').replace('&amp;', '_and_')
 
 
 def get_videos(canvasjson):
